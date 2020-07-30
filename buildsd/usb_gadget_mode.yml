@@ -1,0 +1,13 @@
+- name: "Gadget Mode - Update config.txt"
+  lineinfile:
+    dest: /Volumes/boot/config.txt
+    state: present
+    create: yes
+    line: 'dtoverlay=dwc2'
+
+- name: "Gadget Mode - Update cmdline.txt"
+  replace:
+    dest: /Volumes/boot/cmdline.txt
+    regexp: 'rootwait quiet'
+    replace: 'rootwait modules-load=dwc2,g_ether quiet'
+

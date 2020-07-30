@@ -1,0 +1,5 @@
+- name: "SSH Enable on boot"
+  copy:
+    content: ""
+    dest: /Volumes/boot/ssh
+    force: no

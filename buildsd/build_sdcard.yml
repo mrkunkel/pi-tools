@@ -1,0 +1,31 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: False
+
+  vars:
+  - sdcard_mpath: /dev/disk2
+  - sdcard_rpath: /dev/rdisk2
+  - gadget_mode: False
+  - enable_ssh: True
+  - wpa_ssid: "CHANGEME"
+  - wpa_pass: "CHANGEME"
+
+  tasks:
+  - name: "Image SD Card"
+    import_tasks: imagesd.yml
+
+  - name: "Configure SSH"
+    import_tasks: enable_ssh.yml
+    when: enable_ssh|bool == True
+
+  - name: "Configure USB Gadget Mode"
+    import_tasks: usb_gadget_mode.yml
+    when: gadget_mode|bool == True
+
+  - name: "Configure WPA Supplicant"
+    import_tasks: wireless.yml
+    when: wpa_ssid is defined
+
+  - name: "Eject SD Card"
+    import_tasks: ejectsd.yml

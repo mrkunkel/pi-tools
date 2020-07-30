@@ -1,0 +1,13 @@
+- name: "Erase SD MBR"
+  command: "diskutil partitionDisk {{ sdcard_mpath }} 1 MBR \"Free Space\" \"%noformat%\" 100%"
+
+- name: "Erase SD Card"
+  command: "diskutil eraseDisk FAT32 RASPBIAN {{ sdcard_mpath }}"
+
+- name: "Unmount SD Card"
+  command: "diskutil unmountDisk {{ sdcard_mpath }}"
+
+- name: "Image Transfer may take 90 seconds or longer"
+  command: "dd bs=1m if=raspbian.img of={{ sdcard_rpath }}"
+  become: yes
+  become_method: sudo

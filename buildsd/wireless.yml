@@ -1,0 +1,13 @@
+- name: "Configure Wireless network"
+  copy:
+    dest: /Volumes/boot/wpa_supplicant.conf
+    content: |
+      country=US
+      ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+      update_config=1
+
+      network={
+        ssid="CHANGEME"
+        psk=CHANGEME
+        key_mgmt=WPA-PSK
+      }
